@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Recommendation System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">Food Recommendation System</div>
+        <div class="nav-links">
+            <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <form action="/predict" method="post">
+            <label for="climate">Climate:</label>
+            <select name="climate" id="climate">
+                <option value="Humid">Humid</option>
+                <option value="Cold">Cold</option>
+                <option value="Hot">Hot</option>
+                <option value="Dry">Dry</option>
+                <option value="Moderate">Moderate</option>
+            </select>
+
+            <label for="temperature">Temperature (°C):</label>
+            <input type="number" name="temperature" id="temperature" required>
+
+            <label for="season">Season:</label>
+            <select name="season" id="season">
+                <option value="Summer">Summer</option>
+                <option value="Winter">Winter</option>
+                <option value="Spring">Spring</option>
+                <option value="Autumn">Autumn</option>
+            </select>
+
+            <label for="disease">Disease:</label>
+            <select name="disease" id="disease">
+                <option value="Heat Stroke">Heat Stroke</option>
+                <option value="Common Cold">Common Cold</option>
+                <option value="Allergies">Allergies</option>
+                <option value="Diabetes">Diabetes</option>
+                <option value="Hypertension">Hypertension</option>
+                <option value="Obesity">Obesity</option>
+                <option value="Flu">Flu</option>
+            </select>
+
+            <button type="submit">Get Recommendation</button>
+        </form>
+    </div>
+
+    <footer>
+        &copy; 2024 Food Recommendation System
+    </footer>
+</body>
+</html>
