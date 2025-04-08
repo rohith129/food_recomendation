@@ -15,16 +15,42 @@
     </nav>
 
     <div class="container">
-        <div class="result">
+        <div class="result-card">
             <h2>Details</h2>
-            <p><strong>Climate:</strong> {{ climate }}</p>
-            <p><strong>Temperature:</strong> {{ temperature }} °C</p>
-            <p><strong>Season:</strong> {{ season }}</p>
-            <p><strong>Disease:</strong> {{ disease }}</p>
+            <div class="divider"></div>
+
+            <div class="info-item">
+                <div class="info-label">Climate:</div>
+                <div class="info-value">{{ climate }}</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-label">Temperature:</div>
+                <div class="info-value">{{ temperature }} °C</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-label">Season:</div>
+                <div class="info-value">{{ season }}</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-label">Disease:</div>
+                <div class="info-value">{{ disease }}</div>
+            </div>
 
             <h2>Recommendation</h2>
-            <p><strong>Recommended Food:</strong> {{ recommended_food }}</p>
-            <p><strong>Nutritional Benefit:</strong> {{ nutritional_benefit }}</p>
+            <div class="divider"></div>
+
+            <div class="info-item">
+                <div class="info-label">Recommended Food:</div>
+                <div class="info-value">{{ recommended_food }}</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-label">Nutritional Benefit:</div>
+                <div class="info-value">{{ nutritional_benefit }}</div>
+            </div>
         </div>
 
         <a href="/" class="back-link">Go Back</a>

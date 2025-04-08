@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template, redirect, url_for, session, flash
-import joblib
 import pandas as pd
 from supabase import create_client
 import os
@@ -11,10 +10,8 @@ load_dotenv()
 # Initialize Supabase client
 supabase = create_client(os.getenv('SUPABASE_URL'), os.getenv('SUPABASE_KEY'))
 
-# Load the models and label encoders
-food_model = joblib.load("food_model.pkl")
-benefit_model = joblib.load("benefit_model.pkl")
-label_encoders = joblib.load("label_encoders.pkl")
+# Load the dataset
+df = pd.read_excel("Food_Recommendation_Climate_Disease.xlsx")
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -133,21 +130,36 @@ def predict():
     season = request.form["season"]
     disease = request.form["disease"]
 
-    # Encode the input data
-    input_data = pd.DataFrame({
-        "Climate": [label_encoders["Climate"].transform([climate])[0]],
-        "Temperature (°C)": [temperature],
-        "Season": [label_encoders["Season"].transform([season])[0]],
-        "Disease": [label_encoders["Disease"].transform([disease])[0]],
-    })
+    # Validate temperature range
+    if temperature < -20 or temperature > 50:
+        flash("Temperature must be between -20°C and 50°C for accurate recommendations.")
+        return redirect(url_for("home"))
 
-    # Predict Recommended Food and Nutritional Benefit
-    recommended_food = food_model.predict(input_data)
-    nutritional_benefit = benefit_model.predict(input_data)
+    # Filter the dataset based on input conditions
+    filtered_df = df[
+        (df['Climate'] == climate) &
+        (df['Season'] == season) &
+        (df['Disease'] == disease)
+    ]
 
-    # Decode the predictions
-    recommended_food = label_encoders["Recommended Food"].inverse_transform(recommended_food)[0]
-    nutritional_benefit = label_encoders["Nutritional Benefit"].inverse_transform(nutritional_benefit)[0]
+    # If no exact match, find the closest temperature match
+    if len(filtered_df) == 0:
+        filtered_df = df[
+            (df['Climate'] == climate) &
+            (df['Season'] == season) &
+            (df['Disease'] == disease)
+        ]
+        # Find the row with the closest temperature
+        if len(filtered_df) > 0:
+            filtered_df['temp_diff'] = abs(filtered_df['Temperature (°C)'] - temperature)
+            filtered_df = filtered_df.sort_values('temp_diff').head(1)
+
+    if len(filtered_df) > 0:
+        recommended_food = filtered_df['Recommended Food'].iloc[0]
+        nutritional_benefit = filtered_df['Nutritional Benefit'].iloc[0]
+    else:
+        recommended_food = "No specific recommendation found"
+        nutritional_benefit = "Please try different combinations"
 
     # Store the results in session
     session["climate"] = climate

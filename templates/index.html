@@ -15,6 +15,14 @@
     </nav>
 
     <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
         <form action="/predict" method="post">
             <label for="climate">Climate:</label>
             <select name="climate" id="climate">
@@ -26,7 +34,7 @@
             </select>
 
             <label for="temperature">Temperature (°C):</label>
-            <input type="number" name="temperature" id="temperature" required>
+            <input type="number" name="temperature" id="temperature" min="-20" max="50" required>
 
             <label for="season">Season:</label>
             <select name="season" id="season">
@@ -67,5 +75,19 @@
     <footer>
         &copy; 2024 Food Recommendation System
     </footer>
+
+    <script>
+        // Temperature validation
+        document.getElementById('temperature').addEventListener('input', function() {
+            const value = parseFloat(this.value);
+            if (value > 50) {
+                this.setCustomValidity('Temperature cannot exceed 50°C for accurate food recommendations.');
+            } else if (value < -20) {
+                this.setCustomValidity('Temperature cannot be less than -20°C.');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    </script>
 </body>
 </html>
