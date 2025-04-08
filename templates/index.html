@@ -34,7 +34,7 @@
             </select>
 
             <label for="temperature">Temperature (°C):</label>
-            <input type="number" name="temperature" id="temperature" min="-20" max="50" required>
+            <input type="number" name="temperature" id="temperature" min="-20" max="50" step="0.1" value="{{ defaults.temperature }}" required>
 
             <label for="season">Season:</label>
             <select name="season" id="season">
@@ -77,6 +77,39 @@
     </footer>
 
     <script>
+        // Set default values from server
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default climate
+            const climateSelect = document.getElementById('climate');
+            const defaultClimate = "{{ defaults.climate }}";
+            for (let i = 0; i < climateSelect.options.length; i++) {
+                if (climateSelect.options[i].value === defaultClimate) {
+                    climateSelect.selectedIndex = i;
+                    break;
+                }
+            }
+            
+            // Set default season
+            const seasonSelect = document.getElementById('season');
+            const defaultSeason = "{{ defaults.season }}";
+            for (let i = 0; i < seasonSelect.options.length; i++) {
+                if (seasonSelect.options[i].value === defaultSeason) {
+                    seasonSelect.selectedIndex = i;
+                    break;
+                }
+            }
+            
+            // Set default disease
+            const diseaseSelect = document.getElementById('disease');
+            const defaultDisease = "{{ defaults.disease }}";
+            for (let i = 0; i < diseaseSelect.options.length; i++) {
+                if (diseaseSelect.options[i].value === defaultDisease) {
+                    diseaseSelect.selectedIndex = i;
+                    break;
+                }
+            }
+        });
+        
         // Temperature validation
         document.getElementById('temperature').addEventListener('input', function() {
             const value = parseFloat(this.value);

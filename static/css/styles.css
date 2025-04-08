@@ -316,6 +316,93 @@ footer {
     75% { transform: translateX(5px); }
 }
 
+/* Result card styles */
+.food-image-container {
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+.food-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.external-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.external-link {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--background-color);
+    color: var(--primary-color);
+    text-decoration: none;
+    padding: 0.6rem 1rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.external-link i {
+    margin-right: 0.5rem;
+    color: var(--secondary-color);
+}
+
+.external-link:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.external-link:hover i {
+    color: white;
+}
+
+/* Recommendation context styles */
+.recommendation-context {
+    background-color: rgba(52, 152, 219, 0.1);
+    border-radius: 8px;
+    padding: 1.2rem;
+    margin: 1.5rem 0;
+    border-left: 4px solid var(--secondary-color);
+}
+
+.recommendation-context h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+}
+
+.recommendation-context p {
+    margin-bottom: 1rem;
+}
+
+.recommendation-context ul {
+    padding-left: 1.5rem;
+    margin: 0;
+}
+
+.recommendation-context li {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+}
+
+.recommendation-context li:last-child {
+    margin-bottom: 0;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     :root {
@@ -349,6 +436,25 @@ footer {
         display: block;
         text-align: center;
     }
+    
+    .external-links {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .external-link {
+        width: 100%;
+        max-width: 250px;
+        justify-content: center;
+    }
+    
+    .recommendation-context {
+        padding: 1rem;
+    }
+    
+    .recommendation-context h3 {
+        font-size: 1.1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -380,5 +486,28 @@ footer {
     
     .info-label, .info-value {
         font-size: 0.95rem;
+    }
+    
+    .food-image {
+        max-height: 200px;
+    }
+    
+    .external-link {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.8rem;
+    }
+    
+    .recommendation-context {
+        padding: 0.8rem;
+        margin: 1rem 0;
+    }
+    
+    .recommendation-context h3 {
+        font-size: 1rem;
+    }
+    
+    .recommendation-context li {
+        font-size: 0.9rem;
+        margin-bottom: 0.6rem;
     }
 }

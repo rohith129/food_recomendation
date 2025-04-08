@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prediction Result</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <nav class="navbar">
@@ -50,6 +51,55 @@
             <div class="info-item">
                 <div class="info-label">Nutritional Benefit:</div>
                 <div class="info-value">{{ nutritional_benefit }}</div>
+            </div>
+            
+            {% if food_image_url %}
+            <div class="food-image-container">
+                <img src="{{ food_image_url }}" alt="{{ recommended_food }}" class="food-image">
+            </div>
+            {% endif %}
+            
+            <div class="recommendation-context">
+                <h3>Why this recommendation?</h3>
+                <p>This food was recommended based on your specific combination of factors:</p>
+                <ul>
+                    <li><strong>Climate ({{ climate }}):</strong> 
+                        {% if climate == "Hot" or climate == "Humid" %}
+                            In {{ climate.lower() }} climates, cooling and hydrating foods are beneficial.
+                        {% elif climate == "Cold" %}
+                            In cold climates, warming and energy-rich foods help maintain body temperature.
+                        {% elif climate == "Dry" %}
+                            In dry climates, foods with high water content help maintain hydration.
+                        {% else %}
+                            Moderate climates allow for a balanced diet with seasonal preferences.
+                        {% endif %}
+                    </li>
+                    <li><strong>Season ({{ season }}):</strong> 
+                        {% if season == "Summer" %}
+                            Summer calls for cooling, light and fresh foods.
+                        {% elif season == "Winter" %}
+                            Winter is ideal for hearty, warming foods rich in nutrients.
+                        {% elif season == "Spring" %}
+                            Spring is perfect for fresh, detoxifying foods with new growth.
+                        {% else %}
+                            Autumn favors foods that are grounding and immune-supporting.
+                        {% endif %}
+                    </li>
+                    <li><strong>Disease ({{ disease }}):</strong> Foods that help manage {{ disease.lower() }} symptoms and support healing.</li>
+                    <li><strong>Temperature ({{ temperature }}°C):</strong> The ambient temperature affects your body's needs for heating or cooling foods.</li>
+                </ul>
+            </div>
+            
+            <div class="external-links">
+                <a href="https://www.google.com/search?q={{ recommended_food }}" target="_blank" class="external-link">
+                    <i class="fas fa-search"></i> Search on Google
+                </a>
+                <a href="https://www.google.com/search?q={{ recommended_food }}+recipe" target="_blank" class="external-link">
+                    <i class="fas fa-utensils"></i> Find Recipes
+                </a>
+                <a href="https://www.google.com/search?q={{ recommended_food }}+nutrition+facts" target="_blank" class="external-link">
+                    <i class="fas fa-apple-alt"></i> Nutrition Facts
+                </a>
             </div>
         </div>
 
